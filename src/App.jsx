@@ -14,10 +14,12 @@ function App() {
   );
   const [commitMsg, setCommitMsg] = useState("");
   const [progressWidth, setProgressWidth] = useState(0);
+  const [progressMessage, setProgressMessage] = useState("");
 
   // Animate the progress bar in steps of 30px
   const animateProgressInSteps = (targetWidth) => {
     setProgressWidth(0);
+    setProgressMessage("");
     const step = 30;
     const interval = 100; // 300ms between each step
 
@@ -28,12 +30,22 @@ function App() {
         clearInterval(timer);
         // When animation is done, reset the width to 0
         setProgressWidth(0);
+        setProgressMessage("");
         // Then invoke the "hide" command
         invoke("hide")
           .then(() => console.log("hide invoked"))
           .catch((err) => console.error("Error invoking hide:", err));
       } else {
         setProgressWidth(currentWidth);
+        if (currentWidth >= targetWidth * 0.9) {
+          setProgressMessage("Writing objects: 100%");
+        } else if (currentWidth >= targetWidth * 0.6) {
+          setProgressMessage("git push");
+        } else if (currentWidth >= targetWidth * 0.4) {
+          setProgressMessage("git commit");
+        } else if (currentWidth >= targetWidth * 0.2) {
+          setProgressMessage("git add .");
+        }
       }
     }, interval);
   };
@@ -109,6 +121,7 @@ function App() {
               transition: "none", // Disable smooth transition for stepped animation
             }}
           />
+          <span className="progress-message">{progressMessage}</span>
         </div>
       </div>
     </div>
