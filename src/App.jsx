@@ -85,6 +85,7 @@ function App() {
             type="text"
             autoCorrect="off"
             value={workingDir}
+            className="w-[380px]"
             onChange={(e) => setWorkingDir(e.target.value)}
           />
         </div>
@@ -94,6 +95,7 @@ function App() {
             id="commitMsg"
             type="text"
             autoCorrect="off"
+            className="w-[380px]"
             placeholder="if none, it will be 'fix'"
             value={commitMsg}
             onChange={(e) => setCommitMsg(e.target.value)}
