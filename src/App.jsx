@@ -108,13 +108,18 @@ function App() {
             type="text"
             autoCorrect="off"
             className="w-[380px]"
-            placeholder="if none, it will be 'fix'"
+            placeholder="if none, it will be commited as 'fix'"
             value={commitMsg}
             onChange={(e) => setCommitMsg(e.target.value)}
           />
         </div>
         <div className="mt-5">
-          <span className="progress-message">{progressMessage || "..."}</span>
+          <div className="flex items-center justify-between">
+            <div className="progress-message w-[100px]">
+              {progressMessage || "..."}
+            </div>
+            <p>{`press [return] to send it`}</p>
+          </div>
           <div className="progress-indicator segmented ">
             <span
               className="progress-indicator-bar"
