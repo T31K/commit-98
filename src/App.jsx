@@ -43,6 +43,7 @@ function App() {
       // Animate the progress bar in increments up to 200px
       animateProgressInSteps(470, () => {
         invoke("hide");
+        setProgressWidth(0); // Reset the progress bar to 0
       });
 
       try {
@@ -80,6 +81,7 @@ function App() {
             id="workingDir"
             type="text"
             autoCorrect="off"
+            className="w-[300px]"
             value={workingDir}
             onChange={(e) => setWorkingDir(e.target.value)}
           />
@@ -92,6 +94,7 @@ function App() {
             autoCorrect="off"
             placeholder="if none, it will be 'fix'"
             value={commitMsg}
+            className="w-[300px]"
             onChange={(e) => setCommitMsg(e.target.value)}
           />
         </div>
