@@ -1,0 +1,31 @@
+{
+  "name": "tauri-macos-spotlight-app",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.6",
+    "@tauri-apps/api": "2.0.0-rc.4",
+    "98.css": "^0.1.20",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hotkeys-hook": "^4.6.1",
+    "tailwindcss": "^4.0.6"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.0.0-beta.22",
+    "@types/node": "^20.16.3",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^6.1.0"
+  },
+  "packageManager": "pnpm@9.5.0"
+}
