@@ -113,6 +113,7 @@ function App() {
             onChange={(e) => setCommitMsg(e.target.value)}
           />
         </div>
+        <span className="progress-message">{progressMessage}</span>
         <div className="progress-indicator segmented mt-10">
           <span
             className="progress-indicator-bar"
@@ -121,7 +122,6 @@ function App() {
               transition: "none", // Disable smooth transition for stepped animation
             }}
           />
-          <span className="progress-message">{progressMessage}</span>
         </div>
       </div>
     </div>
