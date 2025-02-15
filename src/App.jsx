@@ -19,7 +19,7 @@ function App() {
   const animateProgressInSteps = (targetWidth) => {
     setProgressWidth(0);
     const step = 30;
-    const interval = 300; // 300ms between each step
+    const interval = 100; // 300ms between each step
 
     let currentWidth = 0;
     const timer = setInterval(() => {
