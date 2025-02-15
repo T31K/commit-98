@@ -24,7 +24,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 200,
+        "height": 230,
         "width": 500,
         "transparent": true,
         "resizable": false,

@@ -30,6 +30,7 @@ function App() {
         clearInterval(timer);
         // When animation is done, reset the width to 0
         setProgressWidth(0);
+        setCommitMsg("");
         setProgressMessage("");
         // Then invoke the "hide" command
         invoke("hide")
@@ -71,14 +72,14 @@ function App() {
         console.error("Error executing git command:", error);
       }
     },
-    { enableOnTags: [] }, // Remove restrictions to allow anywhere
+    { prerventDefault: true, enableOnFormTags: ["INPUT"] }, // Remove restrictions to allow anywhere
     [workingDir, commitMsg]
   );
 
   return (
     <div
       className="window flex flex-col"
-      style={{ width: "500px", height: "180px" }}
+      style={{ width: "500px", height: "200px" }}
     >
       <div className="title-bar">
         <div className="title-bar-text">Select a commit</div>
@@ -100,6 +101,18 @@ function App() {
             onChange={(e) => setWorkingDir(e.target.value)}
           />
         </div>
+
+        <div className="field-row">
+          <label htmlFor="commitMsg">Command $ </label>
+          <input
+            type="text"
+            autoFocus={true}
+            autoCorrect="off"
+            className="w-[380px]"
+            disabled
+            placeholder={`git add . && git commit -m "${commitMsg}" && git push`}
+          />
+        </div>
         <div className="field-row">
           <label htmlFor="commitMsg">Commit msg</label>
           <input
@@ -113,7 +126,7 @@ function App() {
             onChange={(e) => setCommitMsg(e.target.value)}
           />
         </div>
-        <div className="mt-5">
+        <div className="mt-2">
           <div className="flex items-center justify-between">
             <div className="progress-message w-[100px]">
               {progressMessage || "..."}
