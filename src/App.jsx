@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import useEscape from "./hooks/useEscape";
 import { Command } from "@tauri-apps/plugin-shell";
+import { invoke } from "@tauri-apps/api/core";
 
 import "./App.css";
 
@@ -15,7 +16,7 @@ function App() {
   const [progressWidth, setProgressWidth] = useState(0);
 
   // Animate the progress bar in steps of 30px
-  const animateProgressInSteps = (targetWidth) => {
+  const animateProgressInSteps = (targetWidth, callback) => {
     setProgressWidth(0);
     const step = 20;
     const interval = 100; // 300ms between each step
@@ -26,6 +27,7 @@ function App() {
       if (currentWidth >= targetWidth) {
         currentWidth = targetWidth;
         clearInterval(timer);
+        if (callback) callback();
       }
       setProgressWidth(currentWidth);
     }, interval);
@@ -39,7 +41,9 @@ function App() {
       const msg = commitMsg.trim() || "fix";
 
       // Animate the progress bar in increments up to 200px
-      animateProgressInSteps(450);
+      animateProgressInSteps(470, () => {
+        invoke("hide");
+      });
 
       try {
         const result = await Command.create("exec-git", [
