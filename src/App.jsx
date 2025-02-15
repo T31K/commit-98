@@ -42,8 +42,8 @@ function App() {
 
       // Animate the progress bar in increments up to 200px
       animateProgressInSteps(470, () => {
-        invoke("hide");
         setProgressWidth(0); // Reset the progress bar to 0
+        invoke("hide");
       });
 
       try {
