@@ -71,7 +71,7 @@ function App() {
         console.error("Error executing git command:", error);
       }
     },
-    { enableOnTags: ["INPUT", "TEXTAREA"] },
+    { enableOnTags: [] }, // Remove restrictions to allow anywhere
     [workingDir, commitMsg]
   );
 
