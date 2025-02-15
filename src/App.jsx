@@ -56,7 +56,6 @@ function App() {
       event.preventDefault();
       const dir = workingDir.trim();
       const msg = commitMsg.trim() || "fix";
-      console.log("Starting command...");
 
       // Animate the progress bar in increments up to 200px
       animateProgressInSteps(480);
@@ -106,6 +105,7 @@ function App() {
           <input
             id="commitMsg"
             type="text"
+            autoFocus={true}
             autoCorrect="off"
             className="w-[380px]"
             placeholder="if none, it will be commited as 'fix'"
