@@ -47,7 +47,7 @@ function App() {
       console.log("Starting command...");
 
       // Animate the progress bar in increments up to 200px
-      animateProgressInSteps(200);
+      animateProgressInSteps(480);
 
       try {
         const result = await Command.create("exec-git", [
