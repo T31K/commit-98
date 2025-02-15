@@ -8,34 +8,46 @@ import "./App.css";
 function App() {
   useEscape();
 
-  // State for the working directory, commit message, and progress bar width
   const [workingDir, setWorkingDir] = useState(
     "/Users/t31k/Projects/commit-anywhere/tauri-macos-spotlight-example/"
   );
   const [commitMsg, setCommitMsg] = useState("");
   const [progressWidth, setProgressWidth] = useState(0);
 
-  // When Enter is pressed, run the git command and animate the progress bar
+  // Animate the progress bar in steps of 30px
+  const animateProgressInSteps = (targetWidth) => {
+    setProgressWidth(0);
+    const step = 30;
+    const interval = 300; // 300ms between each step
+
+    let currentWidth = 0;
+    const timer = setInterval(() => {
+      currentWidth += step;
+      if (currentWidth >= targetWidth) {
+        currentWidth = targetWidth;
+        clearInterval(timer);
+      }
+      setProgressWidth(currentWidth);
+    }, interval);
+  };
+
   useHotkeys(
     "enter",
     async (event) => {
-      event.preventDefault(); // Prevent the default form action if any
+      event.preventDefault();
       const dir = workingDir.trim();
-      const msg = commitMsg.trim() || "fix"; // Default commit message to "fix" if empty
-      console.log("helllo");
+      const msg = commitMsg.trim() || "fix";
 
-      // Animate the progress bar
-      setProgressWidth(0); // Reset progress bar
-      setTimeout(() => setProgressWidth(200), 0); // Start animation
+      // Animate the progress bar in increments up to 200px
+      animateProgressInSteps(200);
 
-      // Invoke the Tauri command 'git_commit' (you must implement this on the Rust side)
       try {
-        let result = await Command.create("exec-git", [
+        const result = await Command.create("exec-git", [
           "-c",
           `cd ${dir} && git add . && git commit -m "${msg}" && git push`,
         ]).execute();
-        console.log("after");
-        console.log(result);
+
+        console.log("Command finished:", result);
       } catch (error) {
         console.error("Error executing git command:", error);
       }
@@ -84,7 +96,8 @@ function App() {
             className="progress-indicator-bar"
             style={{
               width: `${progressWidth}px`,
-              transition: "width 3s ease-in-out",
+              // Remove or shorten the transition to get discrete steps
+              transition: "none",
             }}
           />
         </div>
