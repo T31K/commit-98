@@ -16,20 +16,25 @@ function App() {
   const [progressWidth, setProgressWidth] = useState(0);
 
   // Animate the progress bar in steps of 30px
-  const animateProgressInSteps = (targetWidth, callback) => {
+  const animateProgressInSteps = (targetWidth) => {
     setProgressWidth(0);
-    const step = 20;
-    const interval = 100; // 300ms between each step
+    const step = 30;
+    const interval = 300; // 300ms between each step
 
     let currentWidth = 0;
     const timer = setInterval(() => {
       currentWidth += step;
       if (currentWidth >= targetWidth) {
-        currentWidth = targetWidth;
         clearInterval(timer);
-        if (callback) callback();
+        // When animation is done, reset the width to 0
+        setProgressWidth(0);
+        // Then invoke the "hide" command
+        invoke("hide")
+          .then(() => console.log("hide invoked"))
+          .catch((err) => console.error("Error invoking hide:", err));
+      } else {
+        setProgressWidth(currentWidth);
       }
-      setProgressWidth(currentWidth);
     }, interval);
   };
 
@@ -39,12 +44,10 @@ function App() {
       event.preventDefault();
       const dir = workingDir.trim();
       const msg = commitMsg.trim() || "fix";
+      console.log("Starting command...");
 
       // Animate the progress bar in increments up to 200px
-      animateProgressInSteps(470, () => {
-        setProgressWidth(0); // Reset the progress bar to 0
-        invoke("hide");
-      });
+      animateProgressInSteps(200);
 
       try {
         const result = await Command.create("exec-git", [
@@ -81,7 +84,6 @@ function App() {
             id="workingDir"
             type="text"
             autoCorrect="off"
-            className="w-[300px]"
             value={workingDir}
             onChange={(e) => setWorkingDir(e.target.value)}
           />
@@ -94,7 +96,6 @@ function App() {
             autoCorrect="off"
             placeholder="if none, it will be 'fix'"
             value={commitMsg}
-            className="w-[300px]"
             onChange={(e) => setCommitMsg(e.target.value)}
           />
         </div>
@@ -103,8 +104,7 @@ function App() {
             className="progress-indicator-bar"
             style={{
               width: `${progressWidth}px`,
-              // Remove or shorten the transition to get discrete steps
-              transition: "none",
+              transition: "none", // Disable smooth transition for stepped animation
             }}
           />
         </div>
