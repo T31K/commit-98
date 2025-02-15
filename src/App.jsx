@@ -21,7 +21,7 @@ function App() {
     setProgressWidth(0);
     setProgressMessage("");
     const step = 30;
-    const interval = 100; // 300ms between each step
+    const interval = 130; // 300ms between each step
 
     let currentWidth = 0;
     const timer = setInterval(() => {
