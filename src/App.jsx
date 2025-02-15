@@ -8,13 +8,14 @@ import "./App.css";
 function App() {
   useEscape();
 
-  // State for the working directory and commit message
+  // State for the working directory, commit message, and progress bar width
   const [workingDir, setWorkingDir] = useState(
     "/Users/t31k/Projects/commit-anywhere/tauri-macos-spotlight-example/"
   );
   const [commitMsg, setCommitMsg] = useState("");
+  const [progressWidth, setProgressWidth] = useState(0);
 
-  // When Enter is pressed, run the git command
+  // When Enter is pressed, run the git command and animate the progress bar
   useHotkeys(
     "enter",
     async (event) => {
@@ -22,9 +23,13 @@ function App() {
       const dir = workingDir.trim();
       const msg = commitMsg.trim() || "fix"; // Default commit message to "fix" if empty
       console.log("helllo");
+
+      // Animate the progress bar
+      setProgressWidth(0); // Reset progress bar
+      setTimeout(() => setProgressWidth(200), 0); // Start animation
+
       // Invoke the Tauri command 'git_commit' (you must implement this on the Rust side)
       try {
-        console;
         let result = await Command.create("exec-git", [
           "-c",
           `cd ${dir} && git add . && git commit -m "${msg}" && git push`,
@@ -75,7 +80,13 @@ function App() {
           />
         </div>
         <div className="progress-indicator segmented mt-10">
-          <span className="progress-indicator-bar !w-[50px]" />
+          <span
+            className="progress-indicator-bar"
+            style={{
+              width: `${progressWidth}px`,
+              transition: "width 3s ease-in-out",
+            }}
+          />
         </div>
       </div>
     </div>

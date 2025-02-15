@@ -40,11 +40,11 @@ fn main() {
         // Register a global shortcut (⌘+K) to toggle the visibility of the spotlight panel
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
-                .with_shortcut(Shortcut::new(Some(Modifiers::SUPER), Code::KeyK))
+                .with_shortcut(Shortcut::new(Some(Modifiers::SUPER | Modifiers::SHIFT), Code::Enter))
                 .unwrap()
                 .with_handler(|app, shortcut, event| {
                     if event.state == ShortcutState::Pressed
-                        && shortcut.matches(Modifiers::SUPER, Code::KeyK)
+                        && shortcut.matches(Modifiers::SUPER | Modifiers::SHIFT, Code::Enter)
                     {
                         let window = app.get_webview_window(SPOTLIGHT_LABEL).unwrap();
 
