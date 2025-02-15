@@ -39,7 +39,7 @@ function App() {
       const msg = commitMsg.trim() || "fix";
 
       // Animate the progress bar in increments up to 200px
-      animateProgressInSteps(510);
+      animateProgressInSteps(480);
 
       try {
         const result = await Command.create("exec-git", [
