@@ -17,7 +17,7 @@ function App() {
   // Animate the progress bar in steps of 30px
   const animateProgressInSteps = (targetWidth) => {
     setProgressWidth(0);
-    const step = 25;
+    const step = 20;
     const interval = 100; // 300ms between each step
 
     let currentWidth = 0;
