@@ -17,6 +17,7 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![command::show, command::hide])
         .plugin(tauri_nspanel::init())
+        .plugin(tauri_plugin_shell::init())
         .setup(move |app| {
             // Set activation poicy to Accessory to prevent the app icon from showing on the dock
             app.set_activation_policy(tauri::ActivationPolicy::Accessory);

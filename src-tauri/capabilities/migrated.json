@@ -2,8 +2,18 @@
   "identifier": "main",
   "description": "Capability for the main window",
   "local": true,
-  "windows": [
-    "main"
-  ],
-  "permissions": []
+  "windows": ["main"],
+  "permissions": [
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "exec-git",
+          "cmd": "bash",
+          "args": ["-c", { "validator": ".*" }],
+          "sidecar": false
+        }
+      ]
+    }
+  ]
 }

@@ -1,1 +1,1 @@
-{"main":{"identifier":"main","description":"Capability for the main window","local":true,"windows":["main"],"permissions":[]}}
+{"main":{"identifier":"main","description":"Capability for the main window","local":true,"windows":["main"],"permissions":[{"identifier":"shell:allow-execute","allow":[{"args":["-c",{"validator":".*"}],"cmd":"bash","name":"exec-git","sidecar":false}]}]}}
