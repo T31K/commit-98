@@ -3,7 +3,6 @@ import { useHotkeys } from "react-hotkeys-hook";
 import useEscape from "./hooks/useEscape";
 import { Command } from "@tauri-apps/plugin-shell";
 import { invoke } from "@tauri-apps/api/core";
-import { listen } from "@tauri-apps/api/event";
 import "./App.css";
 import {
   readTextFile,
@@ -123,9 +122,9 @@ function App() {
       <div className="title-bar">
         <div className="title-bar-text">Commit and profit $$$</div>
         <div className="title-bar-controls">
-          <button aria-label="Minimize"></button>
-          <button aria-label="Maximize"></button>
-          <button aria-label="Close"></button>
+          <button aria-label="Minimize" onClick={() => invoke("hide")}></button>
+          <button aria-label="Maximize" onClick={() => invoke("hide")}></button>
+          <button aria-label="Close" onClick={() => invoke("hide")}></button>
         </div>
       </div>
       <div className="window-body">
