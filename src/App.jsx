@@ -40,19 +40,18 @@ function App() {
     loadConfig();
   }, []);
 
-  useEffect(() => {
-    async function saveConfig() {
-      const config = { workingDir, commitMsg };
-      try {
-        await writeTextFile("dir.conf", JSON.stringify(config), {
-          baseDir: BaseDirectory.AppConfig,
-        });
-      } catch (error) {
-        console.error("Error writing config file:", error);
-      }
+  // Save configuration whenever workingDir or commitMsg changes.
+  const handleConfigChange = async (newWorkingDir, newCommitMsg) => {
+    const config = { workingDir: newWorkingDir, commitMsg: newCommitMsg };
+    try {
+      if (newWorkingDir === "") return;
+      await writeTextFile("dir.conf", JSON.stringify(config), {
+        baseDir: BaseDirectory.AppConfig,
+      });
+    } catch (error) {
+      console.error("Error writing config file:", error);
     }
-    saveConfig();
-  }, [workingDir, commitMsg]);
+  };
 
   // Animate the progress bar in steps of 30px
   const animateProgressInSteps = (targetWidth) => {
@@ -136,7 +135,11 @@ function App() {
             autoCorrect="off"
             value={workingDir}
             className="w-[380px]"
-            onChange={(e) => setWorkingDir(e.target.value)}
+            onChange={(e) => {
+              const newWorkingDir = e.target.value;
+              setWorkingDir(newWorkingDir);
+              handleConfigChange(newWorkingDir, commitMsg);
+            }}
           />
         </div>
 
@@ -160,7 +163,11 @@ function App() {
             className="w-[380px]"
             placeholder="if none, it will be commited as 'fix'"
             value={commitMsg}
-            onChange={(e) => setCommitMsg(e.target.value)}
+            onChange={(e) => {
+              const newCommitMsg = e.target.value;
+              setCommitMsg(newCommitMsg);
+              handleConfigChange(workingDir, newCommitMsg);
+            }}
           />
         </div>
         <div className="mt-2">
