@@ -1,20 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import useEscape from "./hooks/useEscape";
 import { Command } from "@tauri-apps/plugin-shell";
 import { invoke } from "@tauri-apps/api/core";
-
+import { listen } from "@tauri-apps/api/event";
 import "./App.css";
+import {
+  readTextFile,
+  writeTextFile,
+  BaseDirectory,
+} from "@tauri-apps/plugin-fs";
 
 function App() {
   useEscape();
-
-  const [workingDir, setWorkingDir] = useState(
-    "/Users/t31k/Projects/commit-anywhere/tauri-macos-spotlight-example/"
-  );
+  const [workingDir, setWorkingDir] = useState("");
   const [commitMsg, setCommitMsg] = useState("");
   const [progressWidth, setProgressWidth] = useState(0);
   const [progressMessage, setProgressMessage] = useState("");
+
+  // Load configuration from file on mount.
+  useEffect(() => {
+    async function loadConfig() {
+      try {
+        const content = await readTextFile("dir.conf", {
+          baseDir: BaseDirectory.AppConfig,
+        });
+        if (content) {
+          try {
+            const config = JSON.parse(content);
+            if (config.workingDir) setWorkingDir(config.workingDir);
+            if (config.commitMsg) setCommitMsg(config.commitMsg);
+          } catch (error) {
+            console.error("Error parsing config file:", error);
+          }
+        }
+      } catch (err) {
+        console.error("Error reading config file:", err);
+      }
+    }
+    loadConfig();
+  }, []);
+
+  useEffect(() => {
+    async function saveConfig() {
+      const config = { workingDir, commitMsg };
+      try {
+        await writeTextFile("dir.conf", JSON.stringify(config), {
+          baseDir: BaseDirectory.AppConfig,
+        });
+      } catch (error) {
+        console.error("Error writing config file:", error);
+      }
+    }
+    saveConfig();
+  }, [workingDir, commitMsg]);
 
   // Animate the progress bar in steps of 30px
   const animateProgressInSteps = (targetWidth) => {
@@ -82,7 +121,7 @@ function App() {
       style={{ width: "500px", height: "200px" }}
     >
       <div className="title-bar">
-        <div className="title-bar-text">Select a commit</div>
+        <div className="title-bar-text">Commit and profit $$$</div>
         <div className="title-bar-controls">
           <button aria-label="Minimize"></button>
           <button aria-label="Maximize"></button>
@@ -106,7 +145,6 @@ function App() {
           <label htmlFor="commitMsg">Command $ </label>
           <input
             type="text"
-            autoFocus={true}
             autoCorrect="off"
             className="w-[380px]"
             disabled
@@ -118,7 +156,7 @@ function App() {
           <input
             id="commitMsg"
             type="text"
-            autoFocus={true}
+            autoFocus
             autoCorrect="off"
             className="w-[380px]"
             placeholder="if none, it will be commited as 'fix'"
@@ -129,7 +167,7 @@ function App() {
         <div className="mt-2">
           <div className="flex items-center justify-between">
             <div className="progress-message w-[100px]">
-              {progressMessage || "..."}
+              {progressMessage || "......"}
             </div>
             <p>{`press [return] to send it`}</p>
           </div>

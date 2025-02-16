@@ -16,9 +16,9 @@
       "icons/icon.ico"
     ]
   },
-  "productName": "tauri-macos-spotlight-app",
-  "version": "0.2.0",
-  "identifier": "com.tauri.spotlight",
+  "productName": "commit-98",
+  "version": "0.0.1",
+  "identifier": "com.commit.98",
   "plugins": {},
   "app": {
     "windows": [
