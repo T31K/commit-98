@@ -5,6 +5,7 @@
   margin: 0 !important;
 }
 
+/* seems to be missing from the cdn css */
 :root {
   background: transparent !important;
   /* Color */
