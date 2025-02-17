@@ -85,39 +85,6 @@
   background-color: #fff;
 }
 
-table {
-  border-collapse: collapse;
-  position: relative;
-  text-align: left;
-  white-space: nowrap;
-  background-color: #fff;
-}
-
-table>thead>tr>* {
-  position: sticky;
-  top: 0;
-  height: 17px;
-  box-shadow: var(--border-raised-outer), var(--border-raised-inner);
-  background: var(--surface);
-  box-sizing: border-box;
-  font-weight: normal;
-  padding: 0 var(--grouped-element-spacing);
-}
-
-table.interactive>tbody>tr {
-  cursor: pointer;
-}
-
-table>tbody>tr.highlighted {
-  color: #fff;
-  background-color: var(--dialog-blue);
-}
-
-table>tbody>tr>* {
-  padding: 0 var(--grouped-element-spacing);
-  height: 14px;
-}
-
 .progress-indicator {
   height: 32px;
   position: relative;
